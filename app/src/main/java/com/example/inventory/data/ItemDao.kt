@@ -37,7 +37,11 @@ interface ItemDao {
     // With Flow as the return type, you receive notification
     // whenever the data in the database changes
     // Chi can khai bao Flow mot lan o day, Room se gui trang thai moi cho Flow biet
-    // moi khi co database duoc thay doi. Dung de hien thi lai cac item
+    // moi khi co database duoc thay doi. Trong vong doi cua
+    // cua Activity hay compose, khi co thay doi cua cac
+    // Item trong database, Room se tu dong goi truy van nay lai va
+    // gui no cho Flow.
+    // Dung de hien thi lai cac item
     // co data thay doi trong List cac item tren giao dien mot cach tu dong.
     // Mot dac diem nua: do ham getItem co kieu tra ve la 1 Flow, ma Flow chay
     // o coroutine nen, ham nay khong dat chu suspend vi mac dinh Flow da la

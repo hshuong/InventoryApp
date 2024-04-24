@@ -42,6 +42,7 @@ class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
     // ham map co nhiem vu: call a constructor of HomeUiState, passing a single it argument
     // .map simply says take the result of the original function and pass it to the lambda function
     // sau khi chay map, thanh phan ben trong Flow la <List<Item>> chuyen thanh HomeUiState(List<Item>)
+    // nghia la Flow<T> map xong thanh Flow<R>
     // map nay co Flow, kotlin se dung ham map rieng danh cho Flow. Ham map nay
     // chi convert gia tri o trong Flow, chu ko convert ca Flow.
     // Su khi convert bang map thi duoc Flow(HomeUiState(List<Item>)), nen can convert sang

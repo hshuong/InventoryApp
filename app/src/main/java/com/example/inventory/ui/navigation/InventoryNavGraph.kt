@@ -50,6 +50,8 @@ fun InventoryNavHost(
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
                 navigateToItemUpdate = {
                     navController.navigate("${ItemDetailsDestination.route}/${it}")
+                    // item ->
+                    // navController.navigate("${ItemDetailsDestination.route}/${item}")
                 }
             )
         }

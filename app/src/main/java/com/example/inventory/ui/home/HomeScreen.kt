@@ -128,6 +128,11 @@ private fun HomeBody(
             InventoryList(
                 itemList = itemList,
                 onItemClick = { onItemClick(it.id) },
+                // hoac viet thanh:
+                // onItemClick = { item -> onItemClick(item.id) },
+                // hoac viet thanh
+                // onItemClick = onItemClick, voi kieu onItemClick: (Item) -> Unit
+                // cho khop voi dinh nghia tham so o dinh nghia ham InventoryList
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )
         }
@@ -139,7 +144,8 @@ private fun InventoryList(
     itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(items = itemList, key = { it.id }) { item ->
+        items(items = itemList, key = { it.id }) { item -> // neu dung it thi
+            // dung xoa chu item -> va thay chu item o 02 noi la chu it
             InventoryItem(item = item,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))

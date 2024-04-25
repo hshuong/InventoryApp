@@ -4,8 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [Item::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Item::class, Category::class],
+    version = 2,
+    exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     // You only need one instance of the RoomDatabase for the whole app,
@@ -22,10 +27,14 @@ abstract class InventoryDatabase : RoomDatabase() {
             // neu Instance la null thi chay block synchronized de tao moi 1 database
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
-                    .fallbackToDestructiveMigration()
+                    .createFromAsset("item_database.db")
+                    //.fallbackToDestructiveMigration()
+                    .addMigrations(migration1)
                     .build()
                     .also { Instance = it }
             }
         }
     }
 }
+
+val migration1: Migration = object : Migration(1, 2) { override fun migrate(database: SupportSQLiteDatabase) {}}

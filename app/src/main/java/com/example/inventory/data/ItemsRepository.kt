@@ -46,4 +46,10 @@ interface ItemsRepository {
      * Update item in the data source
      */
     suspend fun updateItem(item: Item)
+
+    // phan ve Category
+
+    fun getAllCategoriesStream(): Flow<List<Category>>
+
+    fun getCategoryStream(id: Int): Flow<Category?>
 }

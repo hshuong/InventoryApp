@@ -28,4 +28,9 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
     override suspend fun deleteItem(item: Item) = itemDao.delete(item)
 
     override suspend fun updateItem(item: Item) = itemDao.update(item)
+
+    // phan ve Category
+    override fun getAllCategoriesStream(): Flow<List<Category>> = itemDao.getAllCategories()
+
+    override fun getCategoryStream(id: Int): Flow<Category?> = itemDao.getCategory(id)
 }

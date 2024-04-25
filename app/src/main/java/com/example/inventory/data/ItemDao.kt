@@ -51,4 +51,12 @@ interface ItemDao {
     // This allows you to observe the data and update your UI accordingly.
     @Query("SELECT * from items ORDER BY name ASC")
     fun getAllItems(): Flow<List<Item>>
+
+
+    // Phan ve Category
+    @Query("SELECT * from categories WHERE id = :id")
+    fun getCategory(id: Int): Flow<Category>
+
+    @Query("SELECT * from categories ORDER BY name ASC")
+    fun getAllCategories(): Flow<List<Category>>
 }

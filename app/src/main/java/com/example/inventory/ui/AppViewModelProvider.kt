@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.inventory.InventoryApplication
+import com.example.inventory.ui.category.CategoryEntryViewModel
 import com.example.inventory.ui.home.HomeViewModel
 import com.example.inventory.ui.item.ItemDetailsViewModel
 import com.example.inventory.ui.item.ItemEditViewModel
@@ -58,6 +59,13 @@ object AppViewModelProvider {
         initializer {
             HomeViewModel(inventoryApplication().container.itemsRepository)
         }
+
+        // Initializer for CategoryEntryViewModel
+        initializer {
+            // Pass in the repository to the CategoryEntryViewModel
+            CategoryEntryViewModel(inventoryApplication().container.itemsRepository)
+        }
+
     }
 }
 

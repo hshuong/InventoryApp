@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.InventoryTopAppBar
 import com.example.inventory.R
+import com.example.inventory.data.Category
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.item.formatedPrice
@@ -101,8 +102,8 @@ fun HomeScreen(
         },
     ) { innerPadding ->
         HomeBody(
-            itemList = homeUiState.itemList,//listOf(),
-            onItemClick = navigateToItemUpdate,
+            categoryList = homeUiState.categoryList,//listOf(),
+            onCategoryClick = navigateToItemUpdate,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -112,22 +113,22 @@ fun HomeScreen(
 
 @Composable
 private fun HomeBody(
-    itemList: List<Item>, onItemClick: (Int) -> Unit, modifier: Modifier = Modifier
+    categoryList: List<Category>, onCategoryClick: (Int) -> Unit, modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        if (itemList.isEmpty()) {
+        if (categoryList.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_item_description),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge
             )
         } else {
-            InventoryList(
-                itemList = itemList,
-                onItemClick = { onItemClick(it.id) },
+            CategoryList(
+                categoryList = categoryList,
+                onCategoryClick = { onCategoryClick(it.id) },
                 // hoac viet thanh:
                 // onItemClick = { item -> onItemClick(item.id) },
                 // hoac viet thanh
@@ -140,23 +141,23 @@ private fun HomeBody(
 }
 
 @Composable
-private fun InventoryList(
-    itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
+private fun CategoryList(
+    categoryList: List<Category>, onCategoryClick: (Category) -> Unit, modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(items = itemList, key = { it.id }) { item -> // neu dung it thi
+        items(items = categoryList, key = { it.id }) { category -> // neu dung it thi
             // dung xoa chu item -> va thay chu item o 02 noi la chu it
-            InventoryItem(item = item,
+            Category(category = category,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
-                    .clickable { onItemClick(item) })
+                    .clickable { onCategoryClick(category) })
         }
     }
 }
 
 @Composable
-private fun InventoryItem(
-    item: Item, modifier: Modifier = Modifier
+private fun Category(
+    category: Category, modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier,
@@ -170,17 +171,17 @@ private fun InventoryItem(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = item.name,
+                    text = category.name,
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = item.formatedPrice(),
+                    text = category.name,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
             Text(
-                text = stringResource(R.string.in_stock, item.quantity),
+                text = stringResource(R.string.in_stock, category.name),
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -192,8 +193,8 @@ private fun InventoryItem(
 fun HomeBodyPreview() {
     InventoryTheme {
         HomeBody(listOf(
-            Item(1, "Game", 100.0, 20), Item(2, "Pen", 200.0, 30), Item(3, "TV", 300.0, 50)
-        ), onItemClick = {})
+            Category(1, "Game"), Category(2, "Pen"), Category(3, "TV")
+        ), onCategoryClick = {})
     }
 }
 
@@ -201,16 +202,17 @@ fun HomeBodyPreview() {
 @Composable
 fun HomeBodyEmptyListPreview() {
     InventoryTheme {
-        HomeBody(listOf(), onItemClick = {})
+        HomeBody(listOf(), onCategoryClick = {})
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun InventoryItemPreview() {
+fun CategoryItemPreview() {
     InventoryTheme {
-        InventoryItem(
-            Item(1, "Game", 100.0, 20),
+        com.example.inventory.ui.home.Category(
+            Category(1, "Game"),
         )
     }
 }
+

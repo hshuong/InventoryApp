@@ -31,6 +31,7 @@ import com.example.inventory.ui.item.ItemEditDestination
 import com.example.inventory.ui.item.ItemEditScreen
 import com.example.inventory.ui.item.ItemEntryDestination
 import com.example.inventory.ui.item.ItemEntryScreen
+import com.example.inventory.ui.item.ItemListDestination
 
 /**
  * Provides Navigation graph for the application.
@@ -46,6 +47,16 @@ fun InventoryNavHost(
         modifier = modifier
     ) {
         composable(route = HomeDestination.route) {
+            HomeScreen(
+                navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
+                navigateToItemUpdate = {
+                    navController.navigate("${ItemDetailsDestination.route}/${it}")
+                    // item ->
+                    // navController.navigate("${ItemDetailsDestination.route}/${item}")
+                }
+            )
+        }
+        composable(route = ItemListDestination.route) {
             HomeScreen(
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
                 navigateToItemUpdate = {

@@ -18,6 +18,7 @@ package com.example.inventory.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.inventory.data.Category
 import com.example.inventory.data.Item
 import com.example.inventory.data.ItemsRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,7 +34,7 @@ class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
         private const val TIMEOUT_MILLIS = 5_000L
     }
     val homeUiState: StateFlow<HomeUiState> =
-        itemsRepository.getAllItemsStream().map { HomeUiState(it) }
+        itemsRepository.getAllCategoriesStream().map { HomeUiState(it) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
@@ -52,4 +53,4 @@ class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
 /**
  * Ui State for HomeScreen
  */
-data class HomeUiState(val itemList: List<Item> = listOf())
+data class HomeUiState(val categoryList: List<Category> = listOf())

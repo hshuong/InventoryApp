@@ -33,4 +33,9 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
     override fun getAllCategoriesStream(): Flow<List<Category>> = itemDao.getAllCategories()
 
     override fun getCategoryStream(id: Int): Flow<Category?> = itemDao.getCategory(id)
+
+    /**
+     * Retrieve all the items by cid from the given data source.
+     */
+    override fun getItemsByCategoryStream(cid: Int): Flow<List<Item>> = itemDao.getItemsByCategory(cid)
 }

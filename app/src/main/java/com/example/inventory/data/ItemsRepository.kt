@@ -52,4 +52,9 @@ interface ItemsRepository {
     fun getAllCategoriesStream(): Flow<List<Category>>
 
     fun getCategoryStream(id: Int): Flow<Category?>
+
+    /**
+     * Retrieve all the items by cid from the given data source.
+     */
+    fun getItemsByCategoryStream(cid: Int): Flow<List<Item>>
 }

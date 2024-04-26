@@ -69,7 +69,9 @@ object AppViewModelProvider {
 
         // Initializer for ItemListViewModel
         initializer {
-            ItemListViewModel(inventoryApplication().container.itemsRepository)
+            ItemListViewModel(
+                this.createSavedStateHandle(),
+                inventoryApplication().container.itemsRepository)
         }
 
     }

@@ -29,7 +29,8 @@ data class Item(
     val id: Int = 0,
     val name: String,
     val price: Double,
-    val quantity: Int
+    val quantity: Int,
+    val cid: Int = 0
 )
 //    The @Entity annotation marks a class as a database Entity class.
 //    For each Entity class, the app creates a database table to hold the items.

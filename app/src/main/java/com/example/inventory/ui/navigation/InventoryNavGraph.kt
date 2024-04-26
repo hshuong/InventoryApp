@@ -32,6 +32,7 @@ import com.example.inventory.ui.item.ItemEditScreen
 import com.example.inventory.ui.item.ItemEntryDestination
 import com.example.inventory.ui.item.ItemEntryScreen
 import com.example.inventory.ui.item.ItemListDestination
+import com.example.inventory.ui.item.ItemListScreen
 
 /**
  * Provides Navigation graph for the application.
@@ -50,22 +51,34 @@ fun InventoryNavHost(
             HomeScreen(
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
                 navigateToItemUpdate = {
-                    navController.navigate("${ItemDetailsDestination.route}/${it}")
+                    //navController.navigate("${ItemDetailsDestination.route}/${it}")
+                    navController.navigate("${ItemListDestination.route}/${it}")
                     // item ->
                     // navController.navigate("${ItemDetailsDestination.route}/${item}")
                 }
             )
         }
-        composable(route = ItemListDestination.route) {
-            HomeScreen(
-                navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
-                navigateToItemUpdate = {
-                    navController.navigate("${ItemDetailsDestination.route}/${it}")
-                    // item ->
-                    // navController.navigate("${ItemDetailsDestination.route}/${item}")
-                }
+        composable(
+            route = ItemListDestination.routeWithArgs,
+            arguments = listOf(navArgument(ItemListDestination.categoryIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            ItemListScreen(
+                navigateBack = { navController.navigateUp() },
+                navigateToItemUpdate = { navController.navigate("${ItemDetailsDestination.route}/${it}") }
             )
         }
+//        composable(route = ItemListDestination.route) {
+//            HomeScreen(
+//                navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
+//                navigateToItemUpdate = {
+//                    navController.navigate("${ItemDetailsDestination.route}/${it}")
+//                    // item ->
+//                    // navController.navigate("${ItemDetailsDestination.route}/${item}")
+//                }
+//            )
+//        }
         composable(route = ItemEntryDestination.route) {
             ItemEntryScreen(
                 navigateBack = { navController.popBackStack() },

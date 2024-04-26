@@ -59,4 +59,7 @@ interface ItemDao {
 
     @Query("SELECT * from categories ORDER BY name ASC")
     fun getAllCategories(): Flow<List<Category>>
+
+    @Query("SELECT * from items WHERE cid = :cid")
+    fun getItemsByCategory(cid: Int): Flow<List<Item>>
 }

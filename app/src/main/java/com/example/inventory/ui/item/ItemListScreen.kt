@@ -45,31 +45,31 @@ import com.example.inventory.ui.theme.InventoryTheme
 object ItemListDestination : NavigationDestination {
     override val route = "item_list"
     override val titleRes = R.string.item_list
+    const val categoryIdArg = "categoryId"
+    val routeWithArgs = "$route/{$categoryIdArg}"
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListScreen(
-    navigateToItemEntry: () -> Unit,
+    navigateBack: () -> Unit,
     navigateToItemUpdate: (Int) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: ItemListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val itemListUiState by viewModel.itemListUiState.collectAsState()
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             InventoryTopAppBar(
                 title = stringResource(HomeDestination.titleRes),
-                canNavigateBack = false,
-                scrollBehavior = scrollBehavior
+                canNavigateBack = true,
+                navigateUp = navigateBack,
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = navigateToItemEntry,
+                onClick = {  },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
             ) {

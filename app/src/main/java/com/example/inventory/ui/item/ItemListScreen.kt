@@ -1,14 +1,21 @@
 package com.example.inventory.ui.item
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -26,6 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -105,7 +113,8 @@ private fun ItemListBody(
                 style = MaterialTheme.typography.titleLarge
             )
         } else {
-            InventoryList(
+            InventoryGrid(
+            //InventoryList(
                 itemList = itemList,
                 onItemClick = { onItemClick(it.id) },
                 // hoac viet thanh:
@@ -192,6 +201,85 @@ fun InventoryItemPreview() {
         com.example.inventory.ui.item.InventoryItem(
             Item(1, "Game", 100.0, 20),
         )
+    }
+}
+
+//@Composable
+//fun CardItem() {
+//    Card (
+//        modifier = Modifier,
+//        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+//    )
+//    {
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(300.dp)
+//                .background(color = Color.White)
+//        ){
+//
+//        }
+//    }
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun CardItemPreview() {
+//    InventoryTheme {
+//        CardItem()
+//    }
+//}
+
+@Composable
+private fun InventoryGrid(
+    itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 192.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
+        horizontalArrangement = Arrangement.spacedBy(3.dp),
+        modifier = modifier
+    )
+    //LazyColumn(modifier = modifier)
+    {
+        itemList.forEachIndexed { index, item ->
+        //items(items = itemList, key = { it.id }) { item -> // neu dung it thi
+            if (index % 3 == 0 ) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    InventoryItem(item = item,
+                        modifier = Modifier
+                            .padding(dimensionResource(id = R.dimen.padding_small))
+                            .clickable { onItemClick(item) })
+                }
+            } else {
+                item(span = { GridItemSpan(1) }) {
+                    InventoryItem(item = item,
+                        modifier = Modifier
+                            .padding(dimensionResource(id = R.dimen.padding_small))
+                            .clickable { onItemClick(item) })
+                }
+            }
+
+//            InventoryItem(item = item,
+//                modifier = Modifier
+//                    .padding(dimensionResource(id = R.dimen.padding_small))
+//                    .clickable { onItemClick(item) })
+       // }
+        }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun GridHomeBodyPreview() {
+    InventoryTheme {
+        InventoryGrid(listOf(
+            Item(1, "Game", 100.0, 20),
+            Item(2, "Pen", 200.0, 30), 
+            Item(3, "TV", 300.0, 50),
+            Item(4, "Game", 100.0, 20),
+            Item(5, "Pen", 200.0, 30),
+            Item(6, "TV", 300.0, 50),
+        ), onItemClick = {})
     }
 }
 

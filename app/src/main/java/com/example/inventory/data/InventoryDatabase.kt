@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [Item::class, Category::class],
-    version = 6,
+    version = 1,
     exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
@@ -28,8 +28,8 @@ abstract class InventoryDatabase : RoomDatabase() {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
                     .createFromAsset("item_database.db")
-                    //.fallbackToDestructiveMigration()
-                    .addMigrations(migration1)
+                    .fallbackToDestructiveMigration()
+                    //.addMigrations(migration1)
                     .build()
                     .also { Instance = it }
             }
@@ -37,4 +37,4 @@ abstract class InventoryDatabase : RoomDatabase() {
     }
 }
 
-val migration1: Migration = object : Migration(5, 6) { override fun migrate(database: SupportSQLiteDatabase) {}}
+val migration1: Migration = object : Migration(1, 1) { override fun migrate(database: SupportSQLiteDatabase) {}}

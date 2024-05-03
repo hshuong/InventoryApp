@@ -122,7 +122,7 @@ private fun ItemListBody(
                 // hoac viet thanh
                 // onItemClick = onItemClick, voi kieu onItemClick: (Item) -> Unit
                 // cho khop voi dinh nghia tham so o dinh nghia ham InventoryList
-                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
+                //modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )
         }
     }

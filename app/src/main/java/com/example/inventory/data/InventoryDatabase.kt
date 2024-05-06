@@ -37,4 +37,4 @@ abstract class InventoryDatabase : RoomDatabase() {
     }
 }
 
-val migration1: Migration = object : Migration(1, 1) { override fun migrate(database: SupportSQLiteDatabase) {}}
+val migration1: Migration = object : Migration(1, 1) { override fun migrate(databaseMigrate: SupportSQLiteDatabase) {}}

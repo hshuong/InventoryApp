@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -158,8 +159,13 @@ private fun InventoryItem(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Box(modifier = modifier.fillMaxWidth()) {
-            Image(painter = painterResource(R.drawable.phongcanhvidugiamkichthuoc), contentDescription = "kiem tra")
+        Box(modifier = modifier) {
+            Image(
+                painter = painterResource(id = R.drawable.test_1),
+                contentDescription = "hello",
+                contentScale = ContentScale.Crop,
+                modifier = modifier.fillMaxWidth().height(160.dp)
+                )
             Column(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))

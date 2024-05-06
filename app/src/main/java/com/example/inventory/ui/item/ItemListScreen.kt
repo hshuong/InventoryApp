@@ -244,12 +244,13 @@ fun InventoryItemPreview() {
 private fun InventoryGrid(
     itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
 ) {
-    //LazyVerticalGrid(
-    LazyVerticalStaggeredGrid(
-        //columns = GridCells.Adaptive(minSize = 128.dp),
-        columns = StaggeredGridCells.Fixed(2),
+    LazyVerticalGrid(
+    //LazyVerticalStaggeredGrid(
+        columns = GridCells.Adaptive(minSize = 128.dp),
+        //columns = StaggeredGridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),
-        verticalItemSpacing = 16.dp,
+        //verticalItemSpacing = 16.dp,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
     )
@@ -294,7 +295,7 @@ fun GridHomeBodyPreview() {
         InventoryGrid(listOf(
             Item(1, "Game", 100.0, 20),
             Item(2, "Pen", 200.0, 30), 
-            Item(3, "TV", 300.0, 50),
+            Item(3, "TV", 7777.3, 888888),
             Item(4, "Game", 100.0, 20),
             Item(5, "Pen", 200.0, 30),
             Item(6, "TV", 300.0, 50),

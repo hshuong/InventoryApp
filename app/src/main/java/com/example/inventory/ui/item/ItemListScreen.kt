@@ -1,10 +1,12 @@
 package com.example.inventory.ui.item
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +19,9 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
@@ -36,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -152,28 +158,32 @@ private fun InventoryItem(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
+        Box(modifier = modifier.fillMaxWidth()) {
+            Image(painter = painterResource(R.drawable.phongcanhvidugiamkichthuoc), contentDescription = "kiem tra")
+            Column(
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
             ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = item.name,
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Text(
+                        text = item.formatedPrice(),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
                 Text(
-                    text = item.name,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    text = item.formatedPrice(),
+                    text = stringResource(R.string.in_stock, item.quantity),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-            Text(
-                text = stringResource(R.string.in_stock, item.quantity),
-                style = MaterialTheme.typography.titleMedium
-            )
         }
+
     }
 }
 
@@ -234,38 +244,47 @@ fun InventoryItemPreview() {
 private fun InventoryGrid(
     itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 192.dp),
-        verticalArrangement = Arrangement.spacedBy(3.dp),
-        horizontalArrangement = Arrangement.spacedBy(3.dp),
+    //LazyVerticalGrid(
+    LazyVerticalStaggeredGrid(
+        //columns = GridCells.Adaptive(minSize = 128.dp),
+        columns = StaggeredGridCells.Fixed(2),
+        contentPadding = PaddingValues(16.dp),
+        verticalItemSpacing = 16.dp,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
     )
     //LazyColumn(modifier = modifier)
     {
-        itemList.forEachIndexed { index, item ->
-        //items(items = itemList, key = { it.id }) { item -> // neu dung it thi
-            if (index % 3 == 0 ) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    InventoryItem(item = item,
-                        modifier = Modifier
-                            .padding(dimensionResource(id = R.dimen.padding_small))
-                            .clickable { onItemClick(item) })
-                }
-            } else {
-                item(span = { GridItemSpan(1) }) {
-                    InventoryItem(item = item,
-                        modifier = Modifier
-                            .padding(dimensionResource(id = R.dimen.padding_small))
-                            .clickable { onItemClick(item) })
-                }
+        //itemList.forEachIndexed { index, item ->
+        items(items = itemList, key = { it.id }) { item -> // neu dung it thi
+            InventoryItem(item = item,
+                    modifier = Modifier
+                        //.padding(dimensionResource(id = R.dimen.padding_small))
+                        .clickable { onItemClick(item) })
             }
+//            if (index % 3 == 0 ) {
+//                item(span = { GridItemSpan(maxLineSpan) }) {
+//                    InventoryItem(item = item,
+//                        modifier = Modifier
+//                            .padding(dimensionResource(id = R.dimen.padding_small))
+//                            .clickable { onItemClick(item) })
+//                }
+//            } else {
+//                item(span = { GridItemSpan(1) }) {
+//                    InventoryItem(item = item,
+//                        modifier = Modifier
+//                            .padding(dimensionResource(id = R.dimen.padding_small))
+//                            .clickable { onItemClick(item) })
+//                }
+//            }
 
 //            InventoryItem(item = item,
 //                modifier = Modifier
 //                    .padding(dimensionResource(id = R.dimen.padding_small))
 //                    .clickable { onItemClick(item) })
        // }
-        }
+
+        //}
     }
 }
 @Preview(showBackground = true)

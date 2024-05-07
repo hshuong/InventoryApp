@@ -32,6 +32,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -165,7 +166,9 @@ private fun InventoryItem(
                 painter = painterResource(id = R.drawable.test_1),
                 contentDescription = "hello",
                 contentScale = ContentScale.Crop,
-                modifier = modifier.widthIn(120.dp).height(160.dp),
+                modifier = modifier
+                    .widthIn(120.dp)
+                    .height(160.dp),
                 alpha = 0.9F
                 )
             Column(
@@ -310,4 +313,52 @@ fun GridHomeBodyPreview() {
         ), onItemClick = {})
     }
 }
-
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    // padding vertical la keo dai tu trai sang phai
+    // vertical de phan cach giua cac thanh phan greeting.
+    // phan cach 4.dp o day thi 2 cai greeting gan nhau
+    // se phan cach la 4 + 4 = 8 dp
+    // De phan cach giua cac thanh phan la 8 va phan cach
+    // giua canh tren, canh duoi man hinh voi thanh phan tren
+    // duoi thi phai them phan cach padding vertical
+    // cho compose boc lay cac thanh phan, la Column. Column phai
+    // co them 1 padding vertical la 4 nua de khi ghep voi padding
+    // vertical cua thanh phan dau la 4 thi bang 8 padding, tuong tu
+    // voi padding vertical thanh phan duoi cung cung la 4 cua thanh
+    // phan cuoi + 4 cua padding vertical duoi cua Column boc ngoai
+    // la
+    // padding horizontal la keo tu tren xuong duoi
+    // de can bang tren duoi trai phai thi them padding horizontal
+    // cua Surface la 8
+    Surface(
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+        ) {
+        Column(modifier = modifier.fillMaxWidth().padding(24.dp)) {
+            Text(text = "Hello ")
+            Text(text = name)
+        }
+    }
+}
+@Composable
+fun TestMyApp(
+    modifier: Modifier = Modifier,
+    names: List<String> = listOf("World", "Compose")
+) {
+    // padding vertical boc ngoai la de cach 2 phia tren, duoi
+    // cua cac thanh phan greeting voi canh tren, canh duoi man hinh
+    //
+    Column(modifier = modifier.padding(vertical = 4.dp)) {
+        for (name in names) {
+            Greeting(name = name)
+        }
+    }
+}
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun GreetingPreview() {
+    InventoryTheme {
+        TestMyApp()
+    }
+}

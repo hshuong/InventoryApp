@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,8 +27,10 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -58,6 +62,7 @@ import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.home.HomeDestination
 import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.ui.theme.InventoryTheme
+import com.example.inventory.utilities.AutoSizeText
 
 object ItemListDestination : NavigationDestination {
     override val route = "item_list"
@@ -334,11 +339,20 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-        ) {
-        Column(modifier = modifier.fillMaxWidth().padding(24.dp)) {
-            Text(text = "Hello ")
-            Text(text = name)
+    ) {
+        Row(modifier = modifier.padding(24.dp)) {
+            Column(modifier = modifier.weight(1f)) {
+                Text(text = "Hello ")
+                Text(text = name)
+            }
+            ElevatedButton(
+                //modifier = modifier.weight(2f),
+                onClick = { /* TODO */ }
+            ) {
+                Text("Show more")
+            }
         }
+
     }
 }
 @Composable
@@ -360,5 +374,40 @@ fun TestMyApp(
 fun GreetingPreview() {
     InventoryTheme {
         TestMyApp()
+    }
+}
+
+@Composable
+fun CategoryItem(modifier: Modifier = Modifier) {
+    Card(modifier = modifier) {
+        Box(modifier = modifier) {
+            Image(
+                painter = painterResource(id = R.drawable.test_1),
+                contentDescription = "hello",
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .size(152.dp),
+                //alpha = 0.9F
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = modifier
+            ) {
+                AutoSizeText(
+                    text = "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
+                    modifier = modifier.size(152.dp),
+                    alignment = Alignment.Center,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+        }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun CategoryItemPreview() {
+    InventoryTheme {
+        CategoryItem()
     }
 }

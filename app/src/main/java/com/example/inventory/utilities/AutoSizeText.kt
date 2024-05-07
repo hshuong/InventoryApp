@@ -42,9 +42,6 @@ import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.sp
 
 import com.example.inventory.utilities.SuggestedFontSizesStatus.Companion.rememberSuggestedFontSizesStatus
-import com.example.inventory.utilities.roundToPx
-import com.example.inventory.utilities.toIntSize
-import com.example.inventory.utilities.toSp
 
 import kotlin.math.min
 

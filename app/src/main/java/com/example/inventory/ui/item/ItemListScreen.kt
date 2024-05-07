@@ -398,7 +398,7 @@ fun CategoryItem(modifier: Modifier = Modifier) {
                     text = "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
                     modifier = modifier.size(152.dp),
                     alignment = Alignment.Center,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.titleSmall,
                 )
             }
         }

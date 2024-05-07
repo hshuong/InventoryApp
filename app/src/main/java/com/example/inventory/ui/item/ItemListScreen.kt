@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -164,7 +165,8 @@ private fun InventoryItem(
                 painter = painterResource(id = R.drawable.test_1),
                 contentDescription = "hello",
                 contentScale = ContentScale.Crop,
-                modifier = modifier.fillMaxWidth().height(160.dp)
+                modifier = modifier.widthIn(120.dp).height(160.dp),
+                alpha = 0.9F
                 )
             Column(
                 modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),

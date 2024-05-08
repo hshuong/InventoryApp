@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -379,26 +380,36 @@ fun GreetingPreview() {
 
 @Composable
 fun CategoryItem(modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
-        Box(modifier = modifier) {
+    Card(
+        modifier = modifier
+            .width(160.dp)
+            .height(160.dp)
+            .padding(0.dp),
+        //shape = RoundedCornerShape(16.dp),
+//        colors = CardDefaults.cardColors(
+//            containerColor =
+//            MaterialTheme.colorScheme.secondaryContainer,
+//        )
+    ) {
+        Box() {
             Image(
                 painter = painterResource(id = R.drawable.test_1),
                 contentDescription = "hello",
+                modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop,
-                modifier = modifier
-                    .size(152.dp),
-                //alpha = 0.9F
+                alpha = 0.9F
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = modifier
+                modifier = modifier.padding(vertical = 40.dp, horizontal = 12.dp)
             ) {
                 AutoSizeText(
                     text = "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
-                    modifier = modifier.size(152.dp),
+                    //modifier.padding(16.dp),
                     alignment = Alignment.Center,
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White,
                 )
             }
         }
@@ -408,6 +419,12 @@ fun CategoryItem(modifier: Modifier = Modifier) {
 @Composable
 fun CategoryItemPreview() {
     InventoryTheme {
-        CategoryItem()
+        Surface(
+            //color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
+        ) {
+            CategoryItem()
+        }
+
     }
 }

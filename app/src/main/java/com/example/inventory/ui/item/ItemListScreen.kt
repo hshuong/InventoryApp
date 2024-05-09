@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -52,8 +53,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.InventoryTopAppBar
 import com.example.inventory.R
@@ -263,19 +266,25 @@ private fun InventoryGrid(
 ) {
     LazyVerticalGrid(
     //LazyVerticalStaggeredGrid(
-        columns = GridCells.Adaptive(minSize = 128.dp),
+        columns = GridCells.Adaptive(minSize = 160.dp),
+        //columns = GridCells.Fixed(2),
         //columns = StaggeredGridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),
         //verticalItemSpacing = 16.dp,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        // padding vertical la keo dai tu trai sang phai
+        // vertical de phan cach giua cac thanh phan greeting.
+        verticalArrangement = Arrangement.spacedBy(16.dp), // duong ngang
+        horizontalArrangement = Arrangement.spacedBy(16.dp), // duong doc phan cach
         modifier = modifier
     )
     //LazyColumn(modifier = modifier)
     {
+        item {
+            Text("Thu cai choi o day", modifier = Modifier.padding(16.dp).fillMaxWidth())
+        }
         //itemList.forEachIndexed { index, item ->
         items(items = itemList, key = { it.id }) { item -> // neu dung it thi
-            InventoryItem(item = item,
+            CategoryItem(item = item,
                     modifier = Modifier
                         //.padding(dimensionResource(id = R.dimen.padding_small))
                         .clickable { onItemClick(item) })
@@ -342,7 +351,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = modifier.padding(24.dp)) {
-            Column(modifier = modifier.weight(1f)) {
+            Column(modifier = modifier.weight(1f), horizontalAlignment = Alignment.End) {
                 Text(text = "Hello ")
                 Text(text = name)
             }
@@ -370,7 +379,7 @@ fun TestMyApp(
         }
     }
 }
-@Preview(showBackground = true, widthDp = 320)
+@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     InventoryTheme {
@@ -379,12 +388,9 @@ fun GreetingPreview() {
 }
 
 @Composable
-fun CategoryItem(modifier: Modifier = Modifier) {
+fun CategoryItem(item: Item, modifier: Modifier = Modifier) {
     Card(
-        modifier = modifier
-            .width(160.dp)
-            .height(160.dp)
-            .padding(0.dp),
+        modifier = Modifier.height(180.dp)
         //shape = RoundedCornerShape(16.dp),
 //        colors = CardDefaults.cardColors(
 //            containerColor =
@@ -395,35 +401,49 @@ fun CategoryItem(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.test_1),
                 contentDescription = "hello",
-                modifier = Modifier.fillMaxWidth(),
+                //modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop,
                 alpha = 0.9F
             )
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 12.dp).fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
-                modifier = modifier.padding(vertical = 40.dp, horizontal = 12.dp)
+                horizontalAlignment = Alignment.CenterHorizontally,
+
             ) {
+//                Text(
+//                    text = item.name,
+//                    //"Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
+//                    //modifier = Modifier.align(alignment = Alignment.End),
+//                    textAlign = TextAlign.Center,
+//                    color = Color.White
+//                )
                 AutoSizeText(
-                    text = "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
+                    //text = "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say",
+                    text = item.name,
                     //modifier.padding(16.dp),
+                    minTextSize = 14.sp,
+                    maxTextSize = 24.sp,
                     alignment = Alignment.Center,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyMedium,
+
                     color = Color.White,
                 )
             }
         }
     }
 }
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 168)
 @Composable
 fun CategoryItemPreview() {
     InventoryTheme {
         Surface(
             //color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
+            modifier = Modifier.size(168.dp).padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
-            CategoryItem()
+            CategoryItem(Item(4, "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say. Chua co bao gio dep nhu hom nay dat nuoc. Chua co bao gio dep nhu hom nay dat nuoc", 100.0, 20))
         }
 
     }

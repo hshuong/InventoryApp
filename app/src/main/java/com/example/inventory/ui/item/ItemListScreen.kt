@@ -1,5 +1,6 @@
 package com.example.inventory.ui.item
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -26,6 +28,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -46,6 +51,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
@@ -74,6 +80,7 @@ object ItemListDestination : NavigationDestination {
     const val categoryIdArg = "categoryId"
     val routeWithArgs = "$route/{$categoryIdArg}"
 }
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -111,7 +118,7 @@ fun ItemListScreen(
             onItemClick = navigateToItemUpdate,
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxWidth()
         )
     }
 }
@@ -131,7 +138,9 @@ private fun ItemListBody(
                 style = MaterialTheme.typography.titleLarge
             )
         } else {
-            InventoryGrid(
+            InventoryCarouselGrid(
+                getImageList(),
+            //InventoryGrid(
             //InventoryList(
                 itemList = itemList,
                 onItemClick = { onItemClick(it.id) },
@@ -211,8 +220,14 @@ private fun InventoryItem(
 @Composable
 fun HomeBodyPreview() {
     InventoryTheme {
-        ItemListBody(listOf(
-            Item(1, "Game", 100.0, 20), Item(2, "Pen", 200.0, 30), Item(3, "TV", 300.0, 50)
+        ItemListBody(
+            listOf(
+                Item(1, "Game", 100.0, 20),
+                Item(2, "Pen", 200.0, 30),
+                Item(3, "TV", 7777.3, 888888),
+                Item(4, "Game", 100.0, 20),
+                Item(5, "Pen", 200.0, 30),
+                Item(6, "TV", 300.0, 50),
         ), onItemClick = {})
     }
 }
@@ -234,31 +249,6 @@ fun InventoryItemPreview() {
     }
 }
 
-//@Composable
-//fun CardItem() {
-//    Card (
-//        modifier = Modifier,
-//        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-//    )
-//    {
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(300.dp)
-//                .background(color = Color.White)
-//        ){
-//
-//        }
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun CardItemPreview() {
-//    InventoryTheme {
-//        CardItem()
-//    }
-//}
 
 @Composable
 private fun InventoryGrid(
@@ -279,9 +269,6 @@ private fun InventoryGrid(
     )
     //LazyColumn(modifier = modifier)
     {
-        item {
-            Text("Thu cai choi o day", modifier = Modifier.padding(16.dp).fillMaxWidth())
-        }
         //itemList.forEachIndexed { index, item ->
         items(items = itemList, key = { it.id }) { item -> // neu dung it thi
             CategoryItem(item = item,
@@ -351,7 +338,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = modifier.padding(24.dp)) {
-            Column(modifier = modifier.weight(1f), horizontalAlignment = Alignment.End) {
+            Column(modifier = modifier.weight(1f)) {
                 Text(text = "Hello ")
                 Text(text = name)
             }
@@ -379,7 +366,7 @@ fun TestMyApp(
         }
     }
 }
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
     InventoryTheme {
@@ -390,7 +377,7 @@ fun GreetingPreview() {
 @Composable
 fun CategoryItem(item: Item, modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier.height(180.dp)
+        modifier = modifier.height(180.dp)
         //shape = RoundedCornerShape(16.dp),
 //        colors = CardDefaults.cardColors(
 //            containerColor =
@@ -406,7 +393,9 @@ fun CategoryItem(item: Item, modifier: Modifier = Modifier) {
                 alpha = 0.9F
             )
             Column(
-                modifier = Modifier.padding(horizontal = 12.dp).fillMaxSize(),
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -441,10 +430,179 @@ fun CategoryItemPreview() {
     InventoryTheme {
         Surface(
             //color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(168.dp).padding(vertical = 8.dp, horizontal = 8.dp)
+            modifier = Modifier
+                .size(168.dp)
+                .padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
             CategoryItem(Item(4, "Chua co bao gio dep nhu hom nay dat nuoc may troi long ta me say. Chua co bao gio dep nhu hom nay dat nuoc. Chua co bao gio dep nhu hom nay dat nuoc", 100.0, 20))
         }
 
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
+    val pagerState = rememberPagerState(pageCount = { imageList.size })
+    Column(modifier = Modifier
+        .fillMaxWidth()){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+        ) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxWidth()
+            ) { currentPage ->
+                Image(
+                    painter = painterResource(id = imageList[currentPage]),
+                    contentDescription = "post image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(120.dp)
+                    //.padding(start = 4.dp, end = 4.dp)
+                    ,
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color.Black.copy(alpha = 0.8f))
+                    .padding(8.dp)
+                    .align(Alignment.TopEnd)
+            ) {
+                Text("${pagerState.currentPage + 1}", color = Color.White)
+                Text("/", color = Color.White)
+                Text("${pagerState.pageCount}", color = Color.White)
+            }
+
+        }
+
+        if (pagerState.pageCount > 1) {
+            Row(
+                Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    //.align(Alignment.BottomCenter)
+                    .padding(top = 4.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                repeat(pagerState.pageCount) { iteration ->
+                    val color =
+                        if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .size(4.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun ImageCarouselPreview() {
+    InventoryTheme {
+        Surface(
+            //color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .fillMaxWidth()
+
+                .padding(vertical = 8.dp, horizontal = 8.dp)
+        ) {
+            ImageCarousel(imageList = getImageList())
+        }
+
+    }
+}
+
+@Composable
+private fun InventoryCarouselGrid(
+    imageList: List<Int>,
+    itemList: List<Item>,
+    onItemClick: (Item) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        //LazyVerticalStaggeredGrid(
+        columns = GridCells.Adaptive(minSize = 160.dp),
+        //columns = GridCells.Fixed(2),
+        //columns = StaggeredGridCells.Fixed(2),
+        contentPadding = PaddingValues(16.dp),
+        //verticalItemSpacing = 16.dp,
+        // padding vertical la keo dai tu trai sang phai
+        // vertical de phan cach giua cac thanh phan greeting.
+        verticalArrangement = Arrangement.spacedBy(16.dp), // duong ngang
+        horizontalArrangement = Arrangement.spacedBy(16.dp), // duong doc phan cach
+        modifier = modifier
+    )
+    //LazyColumn(modifier = modifier)
+    {
+        item (span = { GridItemSpan(maxLineSpan) }){
+            ImageCarousel(imageList = imageList)
+        }
+        //itemList.forEachIndexed { index, item ->
+        items(items = itemList, key = { it.id }) { item -> // neu dung it thi
+            CategoryItem(item = item,
+                modifier = Modifier
+                    //.padding(dimensionResource(id = R.dimen.padding_small))
+                    .clickable { onItemClick(item) })
+        }
+//            if (index % 3 == 0 ) {
+//                item(span = { GridItemSpan(maxLineSpan) }) {
+//                    InventoryItem(item = item,
+//                        modifier = Modifier
+//                            .padding(dimensionResource(id = R.dimen.padding_small))
+//                            .clickable { onItemClick(item) })
+//                }
+//            } else {
+//                item(span = { GridItemSpan(1) }) {
+//                    InventoryItem(item = item,
+//                        modifier = Modifier
+//                            .padding(dimensionResource(id = R.dimen.padding_small))
+//                            .clickable { onItemClick(item) })
+//                }
+//            }
+
+//            InventoryItem(item = item,
+//                modifier = Modifier
+//                    .padding(dimensionResource(id = R.dimen.padding_small))
+//                    .clickable { onItemClick(item) })
+        // }
+
+        //}
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InventoryCarouselGridPreview() {
+    InventoryTheme {
+        InventoryCarouselGrid(
+            getImageList(),
+            listOf(
+            Item(1, "Game", 100.0, 20),
+            Item(2, "Pen", 200.0, 30),
+            Item(3, "TV", 7777.3, 888888),
+            Item(4, "Game", 100.0, 20),
+            Item(5, "Pen", 200.0, 30),
+            Item(6, "TV", 300.0, 50),
+        ), onItemClick = {})
+    }
+}
+
+fun getImageList(): List<Int> = listOf(
+    R.drawable.post_image6small,
+    R.drawable.post_image1,
+    R.drawable.post_image2,
+    R.drawable.post_image3,
+    R.drawable.post_image4small,
+    R.drawable.post_image5small,
+)

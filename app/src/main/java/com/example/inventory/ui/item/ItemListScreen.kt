@@ -51,6 +51,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -386,7 +388,7 @@ fun CategoryItem(item: Item, modifier: Modifier = Modifier) {
     ) {
         Box() {
             Image(
-                painter = painterResource(id = R.drawable.test_1),
+                painter = painterResource(id = R.drawable.phong_canh),
                 contentDescription = "hello",
                 //modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop,
@@ -444,11 +446,14 @@ fun CategoryItemPreview() {
 @Composable
 fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState(pageCount = { imageList.size })
-    Column(modifier = Modifier
-        .fillMaxWidth()){
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    )
+    {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(180.dp)
                 .clip(RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
@@ -460,7 +465,12 @@ fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
                     contentDescription = "post image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(120.dp)
+                        .blur(radiusX = 10.dp,
+                                radiusY = 10.dp,
+                                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                            )
+
+
                     //.padding(start = 4.dp, end = 4.dp)
                     ,
                     contentScale = ContentScale.Crop
@@ -506,7 +516,7 @@ fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
         }
     }
 }
-@Preview(showBackground = true, widthDp = 320)
+@Preview(showBackground = true)
 @Composable
 fun ImageCarouselPreview() {
     InventoryTheme {
@@ -535,12 +545,12 @@ private fun InventoryCarouselGrid(
         columns = GridCells.Adaptive(minSize = 160.dp),
         //columns = GridCells.Fixed(2),
         //columns = StaggeredGridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(12.dp),
         //verticalItemSpacing = 16.dp,
         // padding vertical la keo dai tu trai sang phai
         // vertical de phan cach giua cac thanh phan greeting.
-        verticalArrangement = Arrangement.spacedBy(16.dp), // duong ngang
-        horizontalArrangement = Arrangement.spacedBy(16.dp), // duong doc phan cach
+        verticalArrangement = Arrangement.spacedBy(12.dp), // duong ngang
+        horizontalArrangement = Arrangement.spacedBy(12.dp), // duong doc phan cach
         modifier = modifier
     )
     //LazyColumn(modifier = modifier)

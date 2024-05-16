@@ -19,17 +19,22 @@ package com.example.inventory.ui.item
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,6 +43,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.InventoryTopAppBar
 import com.example.inventory.R
@@ -181,14 +187,49 @@ fun ItemInputForm(
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
+//@Composable
+//private fun ItemEntryScreenPreview() {
+//    InventoryTheme {
+//        ItemEntryBody(itemUiState = ItemUiState(
+//            ItemDetails(
+//                name = "Item name", price = "10.00", quantity = "5"
+//            )
+//        ), onItemValueChange = {}, onSaveClick = {})
+//    }
+//}
+
+
 @Composable
-private fun ItemEntryScreenPreview() {
-    InventoryTheme {
-        ItemEntryBody(itemUiState = ItemUiState(
-            ItemDetails(
-                name = "Item name", price = "10.00", quantity = "5"
+fun SearchBar(
+    modifier: Modifier = Modifier
+) {
+    TextField(
+        value = "",
+        onValueChange = {},
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null
             )
-        ), onItemValueChange = {}, onSaveClick = {})
+        },
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            focusedContainerColor = MaterialTheme.colorScheme.surface
+        ),
+        placeholder = {
+            Text(stringResource(R.string.placeholder_search))
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(56.dp)
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xffffeb46)
+@Composable
+fun SearchBarPreview() {
+    InventoryTheme {
+        SearchBar(modifier = Modifier.padding(20.dp))
     }
 }

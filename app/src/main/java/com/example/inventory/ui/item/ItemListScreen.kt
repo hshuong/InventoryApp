@@ -465,10 +465,10 @@ fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
                     contentDescription = "post image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .blur(radiusX = 10.dp,
-                                radiusY = 10.dp,
-                                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-                            )
+//                        .blur(radiusX = 10.dp,
+//                                radiusY = 10.dp,
+//                                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+//                            )
 
 
                     //.padding(start = 4.dp, end = 4.dp)

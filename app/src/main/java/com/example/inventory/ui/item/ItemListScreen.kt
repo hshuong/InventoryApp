@@ -454,7 +454,7 @@ fun ImageCarousel(imageList: List<Int>, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(10.dp))
         ) {
             HorizontalPager(
                 state = pagerState,
